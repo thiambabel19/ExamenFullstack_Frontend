@@ -1,0 +1,133 @@
+<div class="container">
+
+  <!-- End row -->
+  <div class="row mt-4">
+    <!-- Ajout -->
+    <div class="col-md-4">
+      <div class="card bg-dark shadow-lg my-2">
+        <div class="card-header">
+          <h5 class="text-white mt-2">Formulaire d'ajout d'un médecin</h5>
+        </div>
+        <div class="card-body text-white">
+          <p><i>Veuillez remplir le champ svp !!!</i></p>
+          <form [formGroup]="medecinForm" (ngSubmit)="addMedecin()">
+            <div class="mb-3">
+              <input type="text" class="form-control is-invalid:not(form)" formControlName="prenom"
+                     [ngClass]="{'is-invalid':submited && medecinForm.controls['prenom'].errors}"
+                     placeholder="Entrer le prénom du médecin ...">
+              <!-- erreur message -->
+              <div *ngIf="submited && medecinForm.controls['prenom'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-3">
+              <input type="text" class="form-control is-invalid:not(form)" formControlName="nom"
+                     [ngClass]="{'is-invalid':submited && medecinForm.controls['nom'].errors}"
+                     placeholder="Entrer le nom du médecin ...">
+              <!-- erreur message -->
+              <div *ngIf="submited && medecinForm.controls['nom'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-3">
+              <input type="text" class="form-control is-invalid:not(form)" formControlName="telephone"
+                     [ngClass]="{'is-invalid':submited && medecinForm.controls['telephone'].errors}"
+                     placeholder="Entrer le téléphone du médecin ...">
+              <!-- erreur message -->
+              <div *ngIf="submited && medecinForm.controls['telephone'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-4">
+              <input type="submit" class="btn btn-success" value="Ajouter">
+              <a class="btn btn-danger ms-2" routerLink="../">Annuller </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End ajout -->
+
+    <!-- Liste -->
+    <div class="col-md-8">
+      <div class="card bg-dark shadow-lg my-2">
+        <div class="card-header text-white">
+          <h5 class="text-white">Liste des médecins</h5>
+          <div class="row">
+            <div class="col-md-4 align-middle">
+              <label><i>Lot d'affichages</i></label>
+              <select (change)="onTableSizeChange($event)" class="shadow my-2 ms-2">
+                <option *ngFor="let size of tableSizes" selected="selected"> {{ size }}</option>
+              </select>
+            </div>
+            <div class="col-md-4 offset-4">
+              <form [formGroup]="formRecherche" (ngSubmit)="search()" method="get">
+                <input id="nomMedecin" type="text" class="form-control shadow-lg my-2" formControlName="nomMedecin"
+                       placeholder="Rechercher un médecin ..." [(ngModel)]="medecinSearch">
+              </form>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-body text-white">
+
+          <div>
+            <table class="table table-bordered text-white">
+              <tr>
+                <th class="text-white"><i>#</i></th>
+                <th class="text-white"><i>Prénom</i></th>
+                <th class="text-white"><i>Nom</i></th>
+                <th class="text-white"><i>Téléphone</i></th>
+                <th class="text-white"><i>Actions</i></th>
+
+              <tr *ngFor="let medecin of tabMedecins | filter:medecinSearch | paginate:
+            {
+                      itemsPerPage: tableSize,
+                      currentPage : page,
+                      totalItems : count
+                  }; let i = index">
+
+                <td class="text-white align-middle"><i>{{ medecin.id }}</i></td>
+                <td class="text-white align-middle"><i>{{ medecin.prenom }}</i></td>
+                <td class="text-white align-middle"><i>{{ medecin.nom }}</i></td>
+                <td class="text-white align-middle"><i>{{ medecin.telephone }}</i></td>
+
+                <td class="align-items-center">
+                  <a class="btn btn-warning my-1 text-white bg-warning" routerLink="../../home/medecin/modifier/{{ medecin.id }}">
+                    <i class="fa fa-pen"></i>
+                  </a>
+                  <a class="btn btn-danger my-1 text-white bg-danger ms-3" routerLink="../../home/medecin/supprimer/{{ medecin.id }}">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+
+            </table>
+
+
+            <div class="row">
+            <div class="col">
+              <pagination-controls previousLabel="Précédente" nextLabel="Suivante"
+                                   (pageChange)="onTableDataChange($event)">
+              </pagination-controls>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- End Liste -->
+  </div>
+  <!-- End row -->
+
+</div>
+
+
+<router-outlet></router-outlet>

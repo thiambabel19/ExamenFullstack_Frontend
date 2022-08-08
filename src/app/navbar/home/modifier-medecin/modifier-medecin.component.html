@@ -1,0 +1,53 @@
+<div class="container mt-5 text-white">
+  <div class="row mt-5">
+    <div class="col-md-4 offset-4 mt-5">
+      <div class="card bg-dark  shadow-lg my-2">
+        <div class="card-header">
+          <h5 class="text-white">Formulaire de modification d'un médecin</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="modForm" (ngSubmit)="editMedecin()">
+            <div class="mb-3">
+              <input type="text" class="form-control is-invalid:not(form)" formControlName="prenom"
+                     [ngClass]="{'is-invalid':submited && modForm.controls['prenom'].errors}"
+                     placeholder="Entrer le prénom du médecin ...">
+              <!-- erreur message -->
+              <div *ngIf="submited && modForm.controls['prenom'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-3">
+              <input type="text" class="form-control is-invalid:not(form)" formControlName="nom"
+                     [ngClass]="{'is-invalid':submited && modForm.controls['nom'].errors}"
+                     placeholder="Entrer le nom du médecin ...">
+              <!-- erreur message -->
+              <div *ngIf="submited && modForm.controls['nom'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-3">
+              <input type="text" class="form-control is-invalid:not(form)" formControlName="telephone"
+                     [ngClass]="{'is-invalid':submited && modForm.controls['telephone'].errors}"
+                     placeholder="Entrer le téléphone du médecin ...">
+              <!-- erreur message -->
+              <div *ngIf="submited && modForm.controls['telephone'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-4">
+              <input type="submit" class="btn btn-success" value="Modifier">
+              <a class="btn btn-danger ms-2" routerLink="../../../medecins">Annuller </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<!-- End row -->
+<div class="row mt-4">
+  <!-- Ajout -->
+  <div class="col-md-4 offet-4">
+    <div class="card bg-dark shadow-lg my-2">
+      <div class="card-header">
+        <h5 class="text-white mt-2">Formulaire de modifiaction d'un utilisateur</h5>
+      </div>
+      <div class="card-body text-white">
+        <p><i>Veuillez remplir le champ svp !!!</i></p>
+        <form [formGroup]="modForm" (ngSubmit)="editUser()">
+          <div class="mb-3">
+            <input type="text" class="form-control is-invalid:not(form)" formControlName="name"
+                   [ngClass]="{'is-invalid':submited && modForm.controls['name'].errors}"
+                   placeholder="Entrer le nom complet de l'utilisateur ...">
+            <!-- erreur message -->
+            <div *ngIf="submited && modForm.controls['name'].errors">
+              <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+            </div>
+            <!-- end erreur message -->
+          </div>
+
+          <div class="mb-3">
+            <input type="email" class="form-control is-invalid:not(form)" formControlName="email"
+                   [ngClass]="{'is-invalid':submited && modForm.controls['email'].errors}"
+                   placeholder="Entrer email utilisateur ...">
+            <!-- erreur message -->
+            <div *ngIf="submited && modForm.controls['email'].errors">
+              <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+            </div>
+            <!-- end erreur message -->
+          </div>
+
+          <div class="mb-3">
+            <input type="password" class="form-control is-invalid:not(form)" formControlName="password"
+                   [ngClass]="{'is-invalid':submited && modForm.controls['password'].errors}"
+                   placeholder="Mot de passe utilisateur ...">
+            <!-- erreur message -->
+            <div *ngIf="submited && modForm.controls['password'].errors">
+              <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+            </div>
+            <!-- end erreur message -->
+          </div>
+
+          <div class="mb-3">
+            <input type="password" class="form-control is-invalid:not(form)" formControlName="password_confirmation"
+                   [ngClass]="{'is-invalid':submited && modForm.controls['password_confirmation'].errors}"
+                   placeholder="Confirmer le mot de passe ...">
+            <!-- erreur message -->
+            <div *ngIf="submited && modForm.controls['password_confirmation'].errors">
+              <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+            </div>
+            <!-- end erreur message -->
+          </div>
+
+          <div class="mb-4">
+            <input type="submit" class="btn btn-success" value="Modifier">
+            <a class="btn btn-danger ms-2" routerLink="../">Annuller </a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- End ajout -->

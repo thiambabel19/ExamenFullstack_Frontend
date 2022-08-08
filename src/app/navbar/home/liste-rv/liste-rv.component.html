@@ -1,0 +1,153 @@
+<div class="container">
+  <!--<div *ngFor="let tab of medecins">
+    {{tab.prenom}}
+  </div>-->
+    <!-- End row -->
+    <div class="row mt-4 text-white">
+        <!-- Ajout -->
+        <div class="col-md-4">
+            <div class="card bg-dark  shadow-lg my-2">
+                <div class="card-header">
+                    <h5 class="text-white mt-2">Formulaire d'enregistrement d'un RV</h5>
+                </div>
+                <div class="card-body">
+                    <p><i>Veuillez remplir le champ svp !!!</i></p>
+                    <form [formGroup]="rvForm" (ngSubmit)="addRv()">
+                      <div class="mb-3">
+                        <label>Date du rendez-vous</label>
+                        <input type="date" class="form-control is-invalid:not(form)" formControlName="date"
+                        [ngClass]="{'is-invalid':submited && rvForm.controls['date'].errors}"
+                        placeholder="Entrer la date du rendez-vous ...">
+
+                        <!-- erreur message -->
+                        <div *ngIf="submited && rvForm.controls['date'].errors">
+                          <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+                        </div>
+                        <!-- end erreur message -->
+                      </div>
+
+                      <div class="mb-3">
+                        <label>Libellé</label>
+                        <input type="text" class="form-control is-invalid:not(form)" formControlName="libelle"
+                               [ngClass]="{'is-invalid':submited && rvForm.controls['date'].errors}"
+                               placeholder="Entrer le libellé du rendez-vous ...">
+
+                        <!-- erreur message -->
+                        <div *ngIf="submited && rvForm.controls['date'].errors">
+                          <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+                        </div>
+                        <!-- end erreur message -->
+                      </div>
+
+                      <div class="mb-3">
+                        <label>Choix d'un Patient</label>
+                        <select type="number" class="form-control is-invalid:not(form)" formControlName="patients_id"
+                                [ngClass]="{'is-invalid':submited && rvForm.controls['patients_id'].errors}">
+                          <option value="{{patient.id}}" *ngFor="let patient of patients">
+                            {{patient.prenom+' '+ patient.nom}}
+                          </option>
+                        </select>
+                        <!-- erreur message -->
+                        <div *ngIf="submited && rvForm.controls['patients_id'].errors">
+                          <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+                        </div>
+                        <!-- end erreur message -->
+                      </div>
+
+                      <div class="mb-3">
+                        <label>Choix d'un médecin</label>
+                        <select type="number" class="form-control is-invalid:not(form)" formControlName="medecin_id"
+                                [ngClass]="{'is-invalid':submited && rvForm.controls['medecin_id'].errors}">
+                          <option value="{{medecin.id}}" *ngFor="let medecin of medecins">
+                            {{medecin.prenom+' '+ medecin.nom}}
+                          </option>
+                        </select>
+                        <!-- erreur message -->
+                        <div *ngIf="submited && rvForm.controls['medecin_id'].errors">
+                          <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+                        </div>
+                        <!-- end erreur message -->
+                      </div>
+
+
+
+                      <div class="mb-4">
+                          <input type="submit" class="btn btn-success" value="Ajouter">
+                          <a class="btn btn-danger ms-2" routerLink="../">Annuller </a>
+                      </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- End ajout -->
+
+        <!-- Liste -->
+        <div class="col-md-8 text-white">
+            <div class="card bg-dark shadow-lg my-2">
+                <div class="card-header">
+                    <h5 class="text-white">Liste des RV</h5>
+                  <div class="row">
+                    <div class="col-md-4 align-middle">
+                      <label><i>Lot d'affichages</i></label>
+                      <select (change)="onTableSizeChange($event)" class="shadow my-2 ms-2">
+                        <option *ngFor="let size of tableSizes" selected="selected"> {{ size }}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div>
+                    <table class="table table-bordered text-white">
+                      <tr>
+                        <th class="text-white"><i>#</i></th>
+                        <th class="text-white"><i>Date RV</i></th>
+                        <th class="text-white"><i>Libellé</i></th>
+                        <th class="text-white"><i>Médecin</i></th>
+                        <th class="text-white"><i>Patient</i></th>
+                        <th class="text-white"><i>Actions</i></th></tr>
+                      <tr *ngFor="let rv of rvs | paginate:
+                    {
+                              itemsPerPage: tableSize,
+                              currentPage : page,
+                              totalItems : count
+                          }; let i = index">
+
+                        <td class="text-white align-middle"><i>{{ rv.id }}</i></td>
+                        <td class="text-white align-middle"><i>{{ rv.date }}</i></td>
+                        <td class="text-white align-middle"><i>{{ rv.libelle }}</i></td>
+                        <td class="text-white align-middle"><i>{{ rv.medecin }}</i></td>
+                        <td class="text-white align-middle"><i>{{ rv.patient }}</i></td>
+                        <td class="align-items-center">
+                          <a class="btn btn-warning my-1 text-white bg-warning" routerLink="../../home/rv/modifier/{{ rv.id }}">
+                            <i class="fa fa-pen"></i>
+                          </a>
+                          <a class="btn btn-danger my-1 text-white bg-danger ms-3" routerLink="../../home/rv/supprimer/{{ rv.id }}">
+                            <i class="fa fa-trash"></i>
+                          </a>
+                        </td>
+                      </tr>
+
+                    </table>
+
+
+                    <div class="row">
+                      <div class="col">
+                        <pagination-controls previousLabel="Précédente" nextLabel="Suivante"
+                                             (pageChange)="onTableDataChange($event)">
+                        </pagination-controls>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Liste -->
+    </div>
+    <!-- End row -->
+
+</div>
+
+
+<router-outlet></router-outlet>

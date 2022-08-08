@@ -1,0 +1,140 @@
+<div class="container">
+
+  <!-- End row -->
+  <div class="row mt-4">
+    <!-- Ajout -->
+    <div class="col-md-4">
+      <div class="card bg-dark shadow-lg my-2">
+        <div class="card-header">
+          <h5 class="text-white mt-2">Formulaire d'ajout d'un utilisateur</h5>
+        </div>
+        <div class="card-body text-white">
+          <p><i>Veuillez remplir le champ svp !!!</i></p>
+          <form [formGroup]="userForm" (ngSubmit)="addUser()">
+            <div class="mb-3">
+              <input type="text" class="form-control is-invalid:not(form)" formControlName="name"
+                     [ngClass]="{'is-invalid':submited && userForm.controls['name'].errors}"
+                     placeholder="Entrer le nom complet de l'utilisateur ...">
+              <!-- erreur message -->
+              <div *ngIf="submited && userForm.controls['name'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-3">
+              <input type="email" class="form-control is-invalid:not(form)" formControlName="email"
+                     [ngClass]="{'is-invalid':submited && userForm.controls['email'].errors}"
+                     placeholder="Entrer email utilisateur ...">
+              <!-- erreur message -->
+              <div *ngIf="submited && userForm.controls['email'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-3">
+              <input type="password" class="form-control is-invalid:not(form)" formControlName="password"
+                     [ngClass]="{'is-invalid':submited && userForm.controls['password'].errors}"
+                     placeholder="Mot de passe utilisateur ...">
+              <!-- erreur message -->
+              <div *ngIf="submited && userForm.controls['password'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-3">
+              <input type="password" class="form-control is-invalid:not(form)" formControlName="password_confirmation"
+                     [ngClass]="{'is-invalid':submited && userForm.controls['password_confirmation'].errors}"
+                     placeholder="Confirmer le mot de passe ...">
+              <!-- erreur message -->
+              <div *ngIf="submited && userForm.controls['password_confirmation'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-4">
+              <input type="submit" class="btn btn-success" value="Ajouter">
+              <a class="btn btn-danger ms-2" routerLink="../">Annuller </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End ajout -->
+
+    <!-- Liste -->
+    <div class="col-md-8">
+      <div class="card bg-dark shadow-lg my-2">
+        <div class="card-header text-white">
+          <h5 class="text-white">Liste des utilisateurs</h5>
+          <div class="row">
+            <div class="col-md-4 align-middle">
+              <label><i>Lot d'affichages</i></label>
+              <select (change)="onTableSizeChange($event)" class="shadow my-2 ms-2">
+                <option *ngFor="let size of tableSizes" selected="selected"> {{ size }}</option>
+              </select>
+            </div>
+            <div class="col-md-4 offset-4">
+              <form [formGroup]="formRecherche" (ngSubmit)="search()" method="get">
+                <input id="name" type="text" class="form-control shadow-lg my-2" formControlName="name"
+                       placeholder="Rechercher un médecin ..." [(ngModel)]="userSearch">
+              </form>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-body text-white">
+
+          <div>
+            <table class="table table-bordered text-white">
+              <tr>
+                <th class="text-white"><i>#</i></th>
+                <th class="text-white"><i>Nom complet</i></th>
+                <th class="text-white"><i>Adresse amail</i></th>
+                <th class="text-white"><i>Actions</i></th>
+
+              <tr *ngFor="let user of users | filter:userSearch | paginate:
+            {
+                      itemsPerPage: tableSize,
+                      currentPage : page,
+                      totalItems : count
+                  }; let i = index">
+
+                <td class="text-white align-middle"><i>{{ user.id }}</i></td>
+                <td class="text-white align-middle"><i>{{ user.name }}</i></td>
+                <td class="text-white align-middle"><i>{{ user.email }}</i></td>
+
+                <td class="align-items-center">
+                  <a class="btn btn-warning my-1 text-white bg-warning" routerLink="../../home/user/modifier/{{ user.id }}">
+                    <i class="fa fa-pen"></i>
+                  </a>
+                  <a class="btn btn-danger my-1 text-white bg-danger ms-3" routerLink="../../home/user/supprimer/{{ user.id }}">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+
+            </table>
+
+
+            <div class="row">
+              <div class="col">
+                <pagination-controls previousLabel="Précédente" nextLabel="Suivante"
+                                     (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- End Liste -->
+  </div>
+  <!-- End row -->
+
+</div>
+

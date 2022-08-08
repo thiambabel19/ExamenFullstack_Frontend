@@ -1,0 +1,78 @@
+<div class="container mt-5 text-white">
+  <div class="row mt-3">
+    <div class="col-md-4 offset-4 mt-5">
+      <div class="card bg-dark  shadow-lg my-2">
+        <div class="card-header">
+          <h5 class="text-white mt-2">Formulaire de modification d'un rv</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="modForm" (ngSubmit)="editRv()">
+            <div class="mb-3">
+              <label>Date du rendez-vous</label>
+              <input type="date" class="form-control is-invalid:not(form)" formControlName="date"
+                     [ngClass]="{'is-invalid':submited && modForm.controls['date'].errors}"
+                     placeholder="Entrer la date du rendez-vous ...">
+
+              <!-- erreur message -->
+              <div *ngIf="submited && modForm.controls['date'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-3">
+              <label>Libellé</label>
+              <input type="text" class="form-control is-invalid:not(form)" formControlName="libelle"
+                     [ngClass]="{'is-invalid':submited && modForm.controls['date'].errors}"
+                     placeholder="Entrer le libellé du rendez-vous ...">
+
+              <!-- erreur message -->
+              <div *ngIf="submited && modForm.controls['date'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-3">
+              <label>Choix d'un Patient</label>
+              <select type="number" class="form-control is-invalid:not(form)" formControlName="patients_id"
+                      [ngClass]="{'is-invalid':submited && modForm.controls['patients_id'].errors}">
+                <option value="{{patient.id}}" *ngFor="let patient of patients">
+                  {{patient.prenom+' '+ patient.nom}}
+                </option>
+              </select>
+              <!-- erreur message -->
+              <div *ngIf="submited && modForm.controls['patients_id'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+            <div class="mb-3">
+              <label>Choix d'un médecin</label>
+              <select type="number" class="form-control is-invalid:not(form)" formControlName="medecins_id"
+                      [ngClass]="{'is-invalid':submited && modForm.controls['medecins_id'].errors}">
+                <option value="{{medecin.id}}" *ngFor="let medecin of medecins">
+                  {{medecin.prenom+' '+ medecin.nom}}
+                </option>
+              </select>
+              <!-- erreur message -->
+              <div *ngIf="submited && modForm.controls['medecins_id'].errors">
+                <span  class="text-danger"><i>Veuillez remplir le champs svp !!!</i></span>
+              </div>
+              <!-- end erreur message -->
+            </div>
+
+
+
+            <div class="mb-4">
+              <input type="submit" class="btn btn-success" value="Modifier">
+              <a class="btn btn-danger ms-2" routerLink="../../">Annuller </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
